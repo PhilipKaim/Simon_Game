@@ -4,12 +4,16 @@
   "description": "simon game",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss": "node-sass --watch scss -o css"
   },
   "author": "Philip Kaim",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/PhilipKaim/Simon_Game/issues"
   },
-  "homepage": "https://github.com/PhilipKaim/Simon_Game#readme"
+  "homepage": "https://github.com/PhilipKaim/Simon_Game#readme",
+  "dependencies": {
+    "node-sass": "^4.7.2"
+  }
 }
