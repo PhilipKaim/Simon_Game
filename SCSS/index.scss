@@ -5,9 +5,8 @@ html {
     align-items: center;
 }
 
-body {
-    z-index: 1;
-    background: black !important;
+* {
+    user-select: none;
 }
 
 *::before, *::after {
@@ -88,19 +87,19 @@ body {
     }
 
     &__count {
-        background: black;
+        background: rgba(0, 0, 0, 0.9);
         border-radius: 4px;
         flex: 1;
         height: 40px;
         width: 60px;
         margin: 0 30px;
-        // margin-bottom: 30px;
         color: white;
         border: solid lighten(#272727, 3%) 3px;
 
         &--value {
             text-align: center;
             margin-top: 10px;
+            position: relative;
         }
 
         &--text {
@@ -112,7 +111,7 @@ body {
     }
 
     &__start {
-        background: green;
+        background: red;
         border-radius: 50%;
         margin: 0 30px;
         width: 25px;
@@ -124,6 +123,10 @@ body {
             position: relative;
             top: 110%;
         }
+
+        &:active {
+            box-shadow: inset 0px 1px 2px 0px #515151;
+        }
     }
 
     &__start:hover {
@@ -131,7 +134,7 @@ body {
     }
 
     &__strict {
-        background: purple;
+        background: yellow;
         border-radius: 50%;
         margin: 0 40px;
         width: 25px;
@@ -142,17 +145,25 @@ body {
         &--light {
             position: relative;
             top: -3%;
-            left: 79.5%;
+            left: 80%;
             width: 10px;
             height: 10px;
             background: #25050C;
             border-radius: 50%;
+
+            &.active {
+                background: red;
+            }
         }
 
         &--text {
             position: relative;
             top: 110%;
             left: -10%;
+        }
+
+        &:active {
+            box-shadow: inset 0px 1px 2px 0px #515151;
         }
     }
     
@@ -183,6 +194,11 @@ body {
             border: solid lighten(#272727, 3%) 3px;
             align-self: center;
             z-index: 9999;
+            transition: all 0.2s;
+
+            &.active {
+                transform: translateX(26.5px);
+            }
         }
 
         &-switch:hover {
