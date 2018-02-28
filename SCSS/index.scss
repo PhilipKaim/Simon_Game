@@ -33,6 +33,10 @@ html {
     position: absolute;
     left: 4%;
     top: 4%;
+
+    &.active {
+        background: #32CD32;
+    }
 }
 
 .red {
@@ -43,6 +47,10 @@ html {
     position: absolute;
     left: 52%;
     top: 4%;
+
+    &.active {
+        background: #BE0000;
+    }
 }
 
 .blue {
@@ -53,6 +61,10 @@ html {
     position: absolute;
     left: 52%;
     top: 52%;
+
+    &.active {
+        background: #125DA8;
+    }
 }
 
 .yellow {
@@ -63,6 +75,10 @@ html {
     position: absolute;
     left: 4%;
     top: 52%;
+
+    &.active {
+        background: #FAFA05;
+    }
 }
 
 .options-data {
