@@ -1,7 +1,5 @@
 // at any time that you add a color and it does not match rerun and buzz
 // not be able to start game when power is off
-// if strict mode is on, reset count and restart game
-
 
 var powerSwitch = document.querySelector('.controls__power-switch');
 var start = document.querySelector('.controls__start');
@@ -80,16 +78,21 @@ function runLoop() {
     if (count === 32) {
         setTimeout(function (){
             winner();
-            playerColorArray.length = 0;
-            colorOrderArray.length = 0;
-            count = 0;
-            score.innerHTML = '- -';
+            reset();
+            alert('You Win!!!');
         }, 300);
     } else {
         currentLoop();
     }
     
     
+}
+
+function reset() {
+    colorOrderArray.length = 0;
+    playerColorArray.length = 0;
+    count = 0;
+    score.innerHTML = '- -';
 }
 
 function playersColor() {
@@ -121,14 +124,14 @@ function playersColor() {
     // sees if the players color choices are the same as the computers color choices
     if (colorOrderArray.every((el, i) => {
         return colorOrderArray[i] === playerColorArray[i];
-    })) {
+    }) && power === true) {
         // adds score to game
         if (count < 9) {
             count++;
             let scoreString = `0${count}`;
             score.innerHTML = scoreString;
             console.log(count);
-        } else {
+        } else if (count > 9) {
             count++;
             let scoreString = count.toString();
             score.innerHTML = scoreString;
@@ -144,39 +147,24 @@ function playersColor() {
         return colorOrderArray[i] === playerColorArray[i];
     }) === false && colorOrderArray.length === playerColorArray.length) {
         if (strictLight.classList.contains('active')) {
-            playerColorArray.length = 0;
-            colorOrderArray.length = 0;
-            count = 0;
-            score.innerHTML = '- -';
+            reset();
             console.log('not match');
-            red.classList.add('active');
-            yellow.classList.add('active');
-            blue.classList.add('active');
-            green.classList.add('active');
+            addColors();
     
             setTimeout(function (){
                 colorOrderArray.push(randomColor());
                 runLoop();
-                red.classList.remove('active');
-                yellow.classList.remove('active');
-                blue.classList.remove('active');
-                green.classList.remove('active');
+                removeColors();
             }, 1000);
 
         } else {
             playerColorArray.length = 0;
             console.log('not match');
-            red.classList.add('active');
-            yellow.classList.add('active');
-            blue.classList.add('active');
-            green.classList.add('active');
+            addColors();
     
             setTimeout(function (){
                 runLoop();
-                red.classList.remove('active');
-                yellow.classList.remove('active');
-                blue.classList.remove('active');
-                green.classList.remove('active');
+                removeColors();
             }, 1000);
         }
     }
@@ -200,13 +188,12 @@ function playersColorRemove() {
 }
 
 
-
+// count not reseting untill power is turned back on !!!!
 function powerToggle() {
     powerSwitch.classList.toggle('active');
     if (power === false) {
         power = true;
-        colorOrderArray.length = 0;
-        playerColorArray.length = 0;
+        reset();
     } else {
         power = false;
         strictMode();
@@ -235,45 +222,43 @@ function randomColor() {
     return randomColor;
 }
 
-function winner() {
+function addColors() {
     red.classList.add('active');
     yellow.classList.add('active');
     blue.classList.add('active');
     green.classList.add('active');
+}
+
+function removeColors() {
+    red.classList.remove('active');
+    yellow.classList.remove('active');
+    blue.classList.remove('active');
+    green.classList.remove('active');
+}
+
+
+
+function winner() {
+    addColors();
 
     setTimeout(() => {
-        red.classList.remove('active');
-        yellow.classList.remove('active');
-        blue.classList.remove('active');
-        green.classList.remove('active');
+        removeColors();
     }, 500);
 
     setTimeout(() => {
-        red.classList.add('active');
-        yellow.classList.add('active');
-        blue.classList.add('active');
-        green.classList.add('active');
+        addColors();
     }, 1000);
 
     setTimeout(() => {
-        red.classList.remove('active');
-        yellow.classList.remove('active');
-        blue.classList.remove('active');
-        green.classList.remove('active');
+        removeColors();
     }, 1500);
 
     setTimeout(() => {
-        red.classList.add('active');
-        yellow.classList.add('active');
-        blue.classList.add('active');
-        green.classList.add('active');
+        addColors();
     }, 2000);
 
     setTimeout(() => {
-        red.classList.remove('active');
-        yellow.classList.remove('active');
-        blue.classList.remove('active');
-        green.classList.remove('active');
+        removeColors();
     }, 2500);
 }
 
