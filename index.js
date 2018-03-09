@@ -1,4 +1,7 @@
 // at any time that you add a color and it does not match rerun and buzz
+// not be able to start game when power is off
+// if strict mode is on, reset count and restart game
+
 
 var powerSwitch = document.querySelector('.controls__power-switch');
 var start = document.querySelector('.controls__start');
@@ -77,6 +80,10 @@ function runLoop() {
     if (count === 32) {
         setTimeout(function (){
             winner();
+            playerColorArray.length = 0;
+            colorOrderArray.length = 0;
+            count = 0;
+            score.innerHTML = '- -';
         }, 300);
     } else {
         currentLoop();
@@ -135,21 +142,43 @@ function playersColor() {
     }
     else if (colorOrderArray.every((el, i) => {
         return colorOrderArray[i] === playerColorArray[i];
-    }) === false && colorOrderArray.length === playerColorArray.length) {        
-        playerColorArray.length = 0;
-        console.log('not match');
-        red.classList.add('active');
-        yellow.classList.add('active');
-        blue.classList.add('active');
-        green.classList.add('active');
+    }) === false && colorOrderArray.length === playerColorArray.length) {
+        if (strictLight.classList.contains('active')) {
+            playerColorArray.length = 0;
+            colorOrderArray.length = 0;
+            count = 0;
+            score.innerHTML = '- -';
+            console.log('not match');
+            red.classList.add('active');
+            yellow.classList.add('active');
+            blue.classList.add('active');
+            green.classList.add('active');
+    
+            setTimeout(function (){
+                colorOrderArray.push(randomColor());
+                runLoop();
+                red.classList.remove('active');
+                yellow.classList.remove('active');
+                blue.classList.remove('active');
+                green.classList.remove('active');
+            }, 1000);
 
-        setTimeout(function (){
-            runLoop();
-            red.classList.remove('active');
-            yellow.classList.remove('active');
-            blue.classList.remove('active');
-            green.classList.remove('active');
-        }, 1000);
+        } else {
+            playerColorArray.length = 0;
+            console.log('not match');
+            red.classList.add('active');
+            yellow.classList.add('active');
+            blue.classList.add('active');
+            green.classList.add('active');
+    
+            setTimeout(function (){
+                runLoop();
+                red.classList.remove('active');
+                yellow.classList.remove('active');
+                blue.classList.remove('active');
+                green.classList.remove('active');
+            }, 1000);
+        }
     }
 
     console.log(playerColorArray);
