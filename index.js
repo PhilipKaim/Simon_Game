@@ -1,7 +1,10 @@
+// at any time that you add a color and it does not match rerun and buzz
+
 var powerSwitch = document.querySelector('.controls__power-switch');
 var start = document.querySelector('.controls__start');
 var strict = document.querySelector('.controls__strict');
 var strictLight = document.querySelector('.controls__strict--light');
+var score = document.querySelector('.controls__count--value');
 var green = document.querySelector('.green');
 var red = document.querySelector('.red');
 var yellow = document.querySelector('.yellow');
@@ -20,14 +23,16 @@ var colorOrderArray = [];
 
 var playerColorArray = [];
 
-// get audio to play more than once
+var count = 0;
 
+
+// playes the current color pattern
 function runLoop() {
 
     let i = 0;
 
-    function currentLoop () {          
-        setTimeout(function () {   
+    function currentLoop () {     
+        setTimeout(function () {
            
             if (colorOrderArray[i] === 1) {
                 red.classList.add('active');
@@ -64,13 +69,105 @@ function runLoop() {
             
            i++;             
            if (i < colorOrderArray.length) {            
-              currentLoop(); 
+              currentLoop();
            }                   
         }, 1000);
      }
+    
+    if (count === 32) {
+        setTimeout(function (){
+            winner();
+        }, 300);
+    } else {
+        currentLoop();
+    }
+    
+    
+}
 
-    currentLoop();
-    colorOrderArray.push(randomColor());
+function playersColor() {
+    if (this === red && power === true) {
+        playerColorArray.push(1);
+        red.classList.add('active');
+        audio1.load();
+        audio1.play();
+    }
+    else if (this === yellow && power === true) {
+        playerColorArray.push(2);
+        yellow.classList.add('active');
+        audio2.load();
+        audio2.play();
+    }
+    else if (this === blue && power === true) {
+        playerColorArray.push(3);
+        blue.classList.add('active');
+        audio3.load();
+        audio3.play();
+    }
+    else if (this === green && power === true) {
+        playerColorArray.push(4);
+        green.classList.add('active');
+        audio4.load();
+        audio4.play();
+    }
+
+    // sees if the players color choices are the same as the computers color choices
+    if (colorOrderArray.every((el, i) => {
+        return colorOrderArray[i] === playerColorArray[i];
+    })) {
+        // adds score to game
+        if (count < 9) {
+            count++;
+            let scoreString = `0${count}`;
+            score.innerHTML = scoreString;
+            console.log(count);
+        } else {
+            count++;
+            let scoreString = count.toString();
+            score.innerHTML = scoreString;
+            console.log(count);
+        }
+        runLoop();
+        playerColorArray.length = 0;
+        colorOrderArray.push(randomColor());
+        console.log('Match!');
+        
+    }
+    else if (colorOrderArray.every((el, i) => {
+        return colorOrderArray[i] === playerColorArray[i];
+    }) === false && colorOrderArray.length === playerColorArray.length) {        
+        playerColorArray.length = 0;
+        console.log('not match');
+        red.classList.add('active');
+        yellow.classList.add('active');
+        blue.classList.add('active');
+        green.classList.add('active');
+
+        setTimeout(function (){
+            runLoop();
+            red.classList.remove('active');
+            yellow.classList.remove('active');
+            blue.classList.remove('active');
+            green.classList.remove('active');
+        }, 1000);
+    }
+
+    console.log(playerColorArray);
+}
+
+function playersColorRemove() {
+    if (this === red) {
+        red.classList.remove('active');
+    }
+    else if (this === yellow) {
+        yellow.classList.remove('active');
+    }
+    else if (this === blue) {
+        blue.classList.remove('active');
+    }
+    else if (this === green) {
+        green.classList.remove('active');
+    }
 }
 
 
@@ -79,60 +176,35 @@ function powerToggle() {
     powerSwitch.classList.toggle('active');
     if (power === false) {
         power = true;
+        colorOrderArray.length = 0;
+        playerColorArray.length = 0;
     } else {
         power = false;
         strictMode();
     }
 }
 
-
-
-
-
 function startGame() {
 
-    // colorOrderArray.push(randomColor());
-
-    if (colorOrderArray.length < 32 && power === true) {
+    if (power === true) {
+        colorOrderArray.push(randomColor());
         runLoop();
     }
-    else if (colorOrderArray.length === 32 && power === true) {
-        winner();
-        colorOrderArray.length = 0;
-    }
 
-    console.log(colorOrderArray);
-    
-    
 }
-
-
-
-
-
 
 function strictMode() {
     if (power === true) {
         strictLight.classList.toggle('active');
-        colorOrderArray.push(randomColor());
-        console.log(colorOrderArray);
     } else {
         strictLight.classList.remove('active');
     }
 }
 
-
-
-
-
 function randomColor() {
     var randomColor = Math.floor(Math.random() * 4) + 1;
     return randomColor;
 }
-
-
-
-
 
 function winner() {
     red.classList.add('active');
@@ -179,3 +251,11 @@ function winner() {
 powerSwitch.addEventListener('click', powerToggle);
 start.addEventListener('click', startGame);
 strict.addEventListener('click', strictMode);
+green.addEventListener('mousedown', playersColor);
+green.addEventListener('mouseup', playersColorRemove);
+red.addEventListener('mousedown', playersColor);
+red.addEventListener('mouseup', playersColorRemove);
+yellow.addEventListener('mousedown', playersColor);
+yellow.addEventListener('mouseup', playersColorRemove);
+blue.addEventListener('mousedown', playersColor);
+blue.addEventListener('mouseup', playersColorRemove);
