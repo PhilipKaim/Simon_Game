@@ -104,6 +104,8 @@ function reset() {
     playerColorArray.length = 0;
     count = 0;
     score.innerHTML = '- -';
+    console.log('test');
+    
 }
 
 function wrongBuzz() {
@@ -183,7 +185,7 @@ function playersColor() {
     // sees if the players color choices are the same as the computers color choices
     if (colorOrderArray.every((el, i) => {
         return colorOrderArray[i] === playerColorArray[i];
-    }) && power === true) {
+    }) && power === true && colorOrderArray.length > 0) {
         // adds score to game
         if (count < 9) {
             count++;
@@ -222,8 +224,8 @@ function powerToggle() {
         scoreTextChange.classList.add('on');
     } else {
         power = false;
-        strictMode();
         reset();
+        strictMode();
         playing = false;
         scoreTextChange.classList.remove('on');
     }
