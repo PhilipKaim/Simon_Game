@@ -31,7 +31,7 @@ html {
   top: 4%; }
   .green.active {
     background: #32CD32; }
-  .green:hover {
+  .green.on:hover {
     cursor: pointer; }
 
 .red {
@@ -44,7 +44,7 @@ html {
   top: 4%; }
   .red.active {
     background: #BE0000; }
-  .red:hover {
+  .red.on:hover {
     cursor: pointer; }
 
 .blue {
@@ -57,7 +57,7 @@ html {
   top: 52%; }
   .blue.active {
     background: #125DA8; }
-  .blue:hover {
+  .blue.on:hover {
     cursor: pointer; }
 
 .yellow {
@@ -70,7 +70,7 @@ html {
   top: 52%; }
   .yellow.active {
     background: #FAFA05; }
-  .yellow:hover {
+  .yellow.on:hover {
     cursor: pointer; }
 
 .options-data {
@@ -97,8 +97,11 @@ html {
     height: 40px;
     width: 60px;
     margin: 0 30px;
-    color: white;
-    border: solid #2f2f2f 3px; }
+    color: grey;
+    border: solid #2f2f2f 3px;
+    transition: all 0.3s; }
+    .controls__count.on {
+      color: white; }
     .controls__count--value {
       text-align: center;
       margin-top: 10px;

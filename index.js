@@ -1,7 +1,11 @@
+// when game is inactive dont allow pointer to appear on hover
+// when computer is doing da pattern, dont allow pointer to appear on hover
+
 var powerSwitch = document.querySelector('.controls__power-switch');
 var start = document.querySelector('.controls__start');
 var strict = document.querySelector('.controls__strict');
 var strictLight = document.querySelector('.controls__strict--light');
+var scoreTextChange = document.querySelector('.controls__count');
 var score = document.querySelector('.controls__count--value');
 var green = document.querySelector('.green');
 var red = document.querySelector('.red');
@@ -29,7 +33,6 @@ var computer = false;
 
 // playes the current color pattern
 function runLoop() {
-
     let i = 0;
 
     function currentLoop () {
@@ -37,7 +40,6 @@ function runLoop() {
         computer = true;
 
         setTimeout(function () {
-           
             if (colorOrderArray[i] === 1) {
                 red.classList.add('active');
                 audio1.load();
@@ -98,8 +100,20 @@ function runLoop() {
     if (playerColorArray.length === 0) {
         computer = true;
     }
-    
-    
+}
+
+function addHover() {
+    yellow.classList.add('on');
+    red.classList.add('on');
+    blue.classList.add('on');
+    green.classList.add('on');
+}
+
+function removeHover() {
+    yellow.classList.remove('on');
+    red.classList.remove('on');
+    blue.classList.remove('on');
+    green.classList.remove('on');
 }
 
 function reset() {
@@ -107,6 +121,17 @@ function reset() {
     playerColorArray.length = 0;
     count = 0;
     score.innerHTML = '- -';
+}
+
+function wrongBuzz() {
+    audio1.load();
+    audio1.play();
+    audio2.load();
+    audio2.play();
+    audio3.load();
+    audio3.play();
+    audio4.load();
+    audio4.play();
 }
 
 // if player makes a wrong move at any point, game will rerun or reset
@@ -120,15 +145,7 @@ function sliced() {
         if (strictLight.classList.contains('active')) {
             reset();
             addColors();
-
-            audio1.load();
-            audio1.play();
-            audio2.load();
-            audio2.play();
-            audio3.load();
-            audio3.play();
-            audio4.load();
-            audio4.play();
+            wrongBuzz();
     
             setTimeout(function (){
                 colorOrderArray.push(randomColor());
@@ -140,15 +157,7 @@ function sliced() {
             
             playerColorArray.length = 0;
             addColors();
-
-            audio1.load();
-            audio1.play();
-            audio2.load();
-            audio2.play();
-            audio3.load();
-            audio3.play();
-            audio4.load();
-            audio4.play();
+            wrongBuzz();
     
             setTimeout(function (){
                 runLoop();
@@ -159,12 +168,6 @@ function sliced() {
 }
 
 function playersColor() {
-
-    // slice colorOrderArray by length of playerColorArray
-    // compare the sliced array and playerColorArray with .every() method
-    
-
-
     if (this === red && power === true && computer === false) {
         playerColorArray.push(1);
         sliced();
@@ -233,11 +236,15 @@ function powerToggle() {
     powerSwitch.classList.toggle('active');
     if (power === false) {
         power = true;
+        scoreTextChange.classList.add('on');
+        addHover();
     } else {
         power = false;
         strictMode();
         reset();
         playing = false;
+        scoreTextChange.classList.remove('on');
+        removeHover();
     }
 }
 
@@ -278,9 +285,8 @@ function removeColors() {
     green.classList.remove('active');
 }
 
-
-
 function winner() {
+    playing = false;
     addColors();
 
     setTimeout(() => {

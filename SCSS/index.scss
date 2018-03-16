@@ -38,7 +38,7 @@ html {
         background: #32CD32;
     }
 
-    &:hover {
+    &.on:hover {
         cursor: pointer;
     }
 }
@@ -56,7 +56,7 @@ html {
         background: #BE0000;
     }
 
-    &:hover {
+    &.on:hover {
         cursor: pointer;
     }
 }
@@ -74,7 +74,7 @@ html {
         background: #125DA8;
     }
 
-    &:hover {
+    &.on:hover {
         cursor: pointer;
     }
 }
@@ -92,7 +92,7 @@ html {
         background: #FAFA05;
     }
 
-    &:hover {
+    &.on:hover {
         cursor: pointer;
     }
 }
@@ -125,8 +125,13 @@ html {
         height: 40px;
         width: 60px;
         margin: 0 30px;
-        color: white;
+        color: grey;
         border: solid lighten(#272727, 3%) 3px;
+        transition: all 0.3s;
+
+        &.on {
+            color: white;
+        }
 
         &--value {
             text-align: center;
