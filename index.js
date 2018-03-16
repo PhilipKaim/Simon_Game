@@ -1,7 +1,3 @@
-// at any time that you add a color and it does not match rerun and buzz
-    // slice out colorOrderArray from the length of playerColorArray
-    // compare 
-
 var powerSwitch = document.querySelector('.controls__power-switch');
 var start = document.querySelector('.controls__start');
 var strict = document.querySelector('.controls__strict');
@@ -19,6 +15,7 @@ var audio4 = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
 
 var power = false;
 
+// will prevent multiple games from starting at once if equal to true
 var playing = false;
 
 var colorOrderArray = [];
@@ -240,14 +237,16 @@ function powerToggle() {
         power = false;
         strictMode();
         reset();
+        playing = false;
     }
 }
 
 function startGame() {
-
-    if (power === true) {
+    
+    if (power === true && playing === false) {
         colorOrderArray.push(randomColor());
         runLoop();
+        playing = true;
     }
 
 }
