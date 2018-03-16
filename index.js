@@ -102,20 +102,6 @@ function runLoop() {
     }
 }
 
-function addHover() {
-    yellow.classList.add('on');
-    red.classList.add('on');
-    blue.classList.add('on');
-    green.classList.add('on');
-}
-
-function removeHover() {
-    yellow.classList.remove('on');
-    red.classList.remove('on');
-    blue.classList.remove('on');
-    green.classList.remove('on');
-}
-
 function reset() {
     colorOrderArray.length = 0;
     playerColorArray.length = 0;
@@ -237,14 +223,12 @@ function powerToggle() {
     if (power === false) {
         power = true;
         scoreTextChange.classList.add('on');
-        addHover();
     } else {
         power = false;
         strictMode();
         reset();
         playing = false;
         scoreTextChange.classList.remove('on');
-        removeHover();
     }
 }
 

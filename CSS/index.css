@@ -31,7 +31,9 @@ html {
   top: 4%; }
   .green.active {
     background: #32CD32; }
-  .green.on:hover {
+  .green:active {
+    box-shadow: inset 0px 2px 3px 1px #515151; }
+  .green:hover {
     cursor: pointer; }
 
 .red {
@@ -44,7 +46,9 @@ html {
   top: 4%; }
   .red.active {
     background: #BE0000; }
-  .red.on:hover {
+  .red:active {
+    box-shadow: inset 0px 2px 3px 1px #515151; }
+  .red:hover {
     cursor: pointer; }
 
 .blue {
@@ -57,7 +61,9 @@ html {
   top: 52%; }
   .blue.active {
     background: #125DA8; }
-  .blue.on:hover {
+  .blue:active {
+    box-shadow: inset 0px 2px 3px 1px #515151; }
+  .blue:hover {
     cursor: pointer; }
 
 .yellow {
@@ -70,7 +76,9 @@ html {
   top: 52%; }
   .yellow.active {
     background: #FAFA05; }
-  .yellow.on:hover {
+  .yellow:active {
+    box-shadow: inset 0px 2px 3px 1px #515151; }
+  .yellow:hover {
     cursor: pointer; }
 
 .options-data {

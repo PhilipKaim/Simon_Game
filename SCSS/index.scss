@@ -38,7 +38,11 @@ html {
         background: #32CD32;
     }
 
-    &.on:hover {
+    &:active {
+        box-shadow: inset 0px 2px 3px 1px #515151;
+    }
+
+    &:hover {
         cursor: pointer;
     }
 }
@@ -56,7 +60,11 @@ html {
         background: #BE0000;
     }
 
-    &.on:hover {
+    &:active {
+        box-shadow: inset 0px 2px 3px 1px #515151;
+    }
+
+    &:hover {
         cursor: pointer;
     }
 }
@@ -74,7 +82,11 @@ html {
         background: #125DA8;
     }
 
-    &.on:hover {
+    &:active {
+        box-shadow: inset 0px 2px 3px 1px #515151;
+    }
+
+    &:hover {
         cursor: pointer;
     }
 }
@@ -92,7 +104,11 @@ html {
         background: #FAFA05;
     }
 
-    &.on:hover {
+    &:active {
+        box-shadow: inset 0px 2px 3px 1px #515151;
+    }
+
+    &:hover {
         cursor: pointer;
     }
 }
