@@ -1,5 +1,5 @@
 // at any time that you add a color and it does not match rerun and buzz
-// dont allow color clicks before or durning computers pattern
+// dont allow to activate colors before computers first turn
 
 var powerSwitch = document.querySelector('.controls__power-switch');
 var start = document.querySelector('.controls__start');
@@ -26,13 +26,18 @@ var playerColorArray = [];
 
 var count = 0;
 
+var computer = false;
+
 
 // playes the current color pattern
 function runLoop() {
 
     let i = 0;
 
-    function currentLoop () {     
+    function currentLoop () {
+        // prevents player from placer activation when computer pattern is in progress
+        computer = true;
+
         setTimeout(function () {
            
             if (colorOrderArray[i] === 1) {
@@ -71,7 +76,13 @@ function runLoop() {
            i++;             
            if (i < colorOrderArray.length) {            
               currentLoop();
-           }                   
+           }
+           // Allows for color placer activation when computers pattern is over
+           else if (i === colorOrderArray.length) {
+               setTimeout(() => {
+                computer = false;
+               }, 800);
+           }                  
         }, 1000);
      }
     
@@ -83,6 +94,11 @@ function runLoop() {
         }, 300);
     } else {
         currentLoop();
+    }
+
+    // prevents color activation before computers first pattern
+    if (playerColorArray.length === 0) {
+        computer = true;
     }
     
     
@@ -96,25 +112,25 @@ function reset() {
 }
 
 function playersColor() {
-    if (this === red && power === true) {
+    if (this === red && power === true && computer === false) {
         playerColorArray.push(1);
         red.classList.add('active');
         audio1.load();
         audio1.play();
     }
-    else if (this === yellow && power === true) {
+    else if (this === yellow && power === true && computer === false) {
         playerColorArray.push(2);
         yellow.classList.add('active');
         audio2.load();
         audio2.play();
     }
-    else if (this === blue && power === true) {
+    else if (this === blue && power === true && computer === false) {
         playerColorArray.push(3);
         blue.classList.add('active');
         audio3.load();
         audio3.play();
     }
-    else if (this === green && power === true) {
+    else if (this === green && power === true && computer === false) {
         playerColorArray.push(4);
         green.classList.add('active');
         audio4.load();
@@ -143,9 +159,12 @@ function playersColor() {
         console.log('Match!');
         
     }
+    
     else if (colorOrderArray.every((el, i) => {
         return colorOrderArray[i] === playerColorArray[i];
     }) === false && colorOrderArray.length === playerColorArray.length) {
+        console.log('test');
+        
         if (strictLight.classList.contains('active')) {
             reset();
             console.log('not match');
@@ -187,8 +206,6 @@ function playersColorRemove() {
     }
 }
 
-
-// count not reseting untill power is turned back on !!!!
 function powerToggle() {
     powerSwitch.classList.toggle('active');
     if (power === false) {
