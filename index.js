@@ -1,5 +1,5 @@
 // at any time that you add a color and it does not match rerun and buzz
-// not be able to start game when power is off
+// dont allow color clicks before or durning computers pattern
 
 var powerSwitch = document.querySelector('.controls__power-switch');
 var start = document.querySelector('.controls__start');
@@ -193,10 +193,10 @@ function powerToggle() {
     powerSwitch.classList.toggle('active');
     if (power === false) {
         power = true;
-        reset();
     } else {
         power = false;
         strictMode();
+        reset();
     }
 }
 
