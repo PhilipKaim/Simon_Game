@@ -1,6 +1,3 @@
-// when game is inactive dont allow pointer to appear on hover
-// when computer is doing da pattern, dont allow pointer to appear on hover
-
 var powerSwitch = document.querySelector('.controls__power-switch');
 var start = document.querySelector('.controls__start');
 var strict = document.querySelector('.controls__strict');
