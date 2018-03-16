@@ -1,5 +1,6 @@
 // at any time that you add a color and it does not match rerun and buzz
-// dont allow to activate colors before computers first turn
+    // slice out colorOrderArray from the length of playerColorArray
+    // compare 
 
 var powerSwitch = document.querySelector('.controls__power-switch');
 var start = document.querySelector('.controls__start');
@@ -111,27 +112,86 @@ function reset() {
     score.innerHTML = '- -';
 }
 
+// if player makes a wrong move at any point, game will rerun or reset
+function sliced() {
+    let sliced = colorOrderArray.slice(0, playerColorArray.length);
+
+    if (sliced.every((el, i) => {
+        return sliced[i] === playerColorArray[i];
+    }) === false) {
+        
+        if (strictLight.classList.contains('active')) {
+            reset();
+            addColors();
+
+            audio1.load();
+            audio1.play();
+            audio2.load();
+            audio2.play();
+            audio3.load();
+            audio3.play();
+            audio4.load();
+            audio4.play();
+    
+            setTimeout(function (){
+                colorOrderArray.push(randomColor());
+                runLoop();
+                removeColors();
+            }, 1000);
+
+        } else {
+            
+            playerColorArray.length = 0;
+            addColors();
+
+            audio1.load();
+            audio1.play();
+            audio2.load();
+            audio2.play();
+            audio3.load();
+            audio3.play();
+            audio4.load();
+            audio4.play();
+    
+            setTimeout(function (){
+                runLoop();
+                removeColors();
+            }, 1000);
+        }
+    }
+}
+
 function playersColor() {
+
+    // slice colorOrderArray by length of playerColorArray
+    // compare the sliced array and playerColorArray with .every() method
+    
+
+
     if (this === red && power === true && computer === false) {
         playerColorArray.push(1);
+        sliced();
         red.classList.add('active');
         audio1.load();
         audio1.play();
     }
     else if (this === yellow && power === true && computer === false) {
         playerColorArray.push(2);
+        sliced();
         yellow.classList.add('active');
         audio2.load();
         audio2.play();
     }
     else if (this === blue && power === true && computer === false) {
         playerColorArray.push(3);
+        sliced();
         blue.classList.add('active');
         audio3.load();
         audio3.play();
     }
     else if (this === green && power === true && computer === false) {
         playerColorArray.push(4);
+        sliced();
         green.classList.add('active');
         audio4.load();
         audio4.play();
@@ -146,49 +206,15 @@ function playersColor() {
             count++;
             let scoreString = `0${count}`;
             score.innerHTML = scoreString;
-            console.log(count);
         } else if (count > 9) {
             count++;
             let scoreString = count.toString();
             score.innerHTML = scoreString;
-            console.log(count);
         }
         runLoop();
         playerColorArray.length = 0;
         colorOrderArray.push(randomColor());
-        console.log('Match!');
-        
     }
-    
-    else if (colorOrderArray.every((el, i) => {
-        return colorOrderArray[i] === playerColorArray[i];
-    }) === false && colorOrderArray.length === playerColorArray.length) {
-        console.log('test');
-        
-        if (strictLight.classList.contains('active')) {
-            reset();
-            console.log('not match');
-            addColors();
-    
-            setTimeout(function (){
-                colorOrderArray.push(randomColor());
-                runLoop();
-                removeColors();
-            }, 1000);
-
-        } else {
-            playerColorArray.length = 0;
-            console.log('not match');
-            addColors();
-    
-            setTimeout(function (){
-                runLoop();
-                removeColors();
-            }, 1000);
-        }
-    }
-
-    console.log(playerColorArray);
 }
 
 function playersColorRemove() {
